@@ -1188,40 +1188,35 @@
 
   <!-- ─── 이메일 구독 (신규) ─── -->
 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { handleSignupSuccess(); }"></iframe>
-
-  <section class="signup-section" id="signup">
+<section class="signup-section reveal" id="signup">
     <div class="wrap">
       <div class="signup-box">
-        <div class="signup-eyebrow reveal">// 출시 알림 신청</div>
-        <h2 class="signup-title reveal d1">
+        <div class="signup-eyebrow">// 출시 알림 신청</div>
+        <h2 class="signup-title d1">
           한남·연남 <span class="gold">비밀 가이드</span><br/>받아보기
         </h2>
-        <p class="signup-desc reveal d2">
+        <p class="signup-desc d2">
           이메일을 남겨주시면 히플 출시 알림과 함께<br/>
           한남·연남동의 비밀 아지트 가이드를 가장 먼저 보내드려요.
         </p>
 
         <form 
-          class="signup-form reveal d3" 
+          class="signup-form d3" 
           id="signup-form" 
           action="https://docs.google.com/forms/d/e/1FAIpQLSffEK01nRWCh2IsCV7LVdt6h6h2K9LTxXJ4zW-mQXNmNBoahQ/formResponse" 
           method="POST" 
           target="hidden_iframe" 
-          onsubmit="submitted=true;"
-          novalidate>
+          onsubmit="return handleSignup(event)">
           
           <input
             class="signup-input"
             type="email"
-            name="entry.1336009796"
+            name="entry.1336009796" 
             id="email-input"
             placeholder="your@email.com"
-            autocomplete="email"
-            inputmode="email"
             required
-            aria-label="이메일 주소"
           />
-          <button class="signup-btn" type="submit" id="submit-btn">
+          <button class="signup-btn" type="submit">
             받아보기 →
           </button>
         </form>
@@ -1229,7 +1224,7 @@
         <div class="signup-success" id="signup-success" role="status">
           ✓ &nbsp;등록됐어요. 먼저 알려드릴게요.
         </div>
-        <div class="signup-note reveal d4">🔒 스팸 없음 · 언제든 구독 취소 가능</div>
+        <div class="signup-note d4">🔒 스팸 없음 · 언제든 구독 취소 가능</div>
       </div>
     </div>
   </section>
@@ -1243,149 +1238,49 @@
     </p>
   </div>
 
-  <!-- ─── CTA ─── -->
-  <section class="cta-section">
-    <div class="wrap">
-      <div class="cta-box">
-        <div class="cta-eyebrow reveal">// 지금 바로 시작하세요</div>
-        <h2 class="cta-h reveal d1">
-          오늘 퇴근길,<br/>
-          <span class="gold">어디</span> 갈지<br/>
-          <span class="stroke">모르겠다면</span>
-        </h2>
-        <p class="cta-sub reveal d2">30초면 됩니다. 기분 하나만 골라보세요.</p>
-        <div class="cta-btns reveal d3">
-          <a href="./index.html" class="btn-primary">🧭 탐험 시작하기</a>
-        </div>
-        <div class="cta-note reveal d4">🔒 어떤 데이터도 서버에 저장되지 않아요</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── FOUNDER STORY (신규) ─── -->
-  <div class="founder-strip">
-    <div class="wrap">
-      <div class="founder-inner reveal">
-        <div class="founder-line" aria-hidden="true"></div>
-        <p class="founder-text">
-          <em>문과생 군인이 사지방에서 진심을 담아 만든 서비스입니다.</em>
-          &nbsp;— Made with ♥ in Barracks
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ─── FOOTER ─── -->
-  <footer>
-    <div class="wrap">
-      <div class="footer-row">
-        <div>
-          <div class="f-logo">Hiple</div>
-          <div class="f-tag">당신만의 아지트 탐험 나침반</div>
-        </div>
-        <ul class="f-links">
-          <li><a href="#how">How</a></li>
-          <li><a href="#places">Places</a></li>
-          <li><a href="#persona">Persona</a></li>
-          <li><a href="#signup">알림 신청</a></li>
-          <li><a href="./index.html">앱 열기</a></li>
-        </ul>
-        <div class="f-copy">한남 · 연남동 Hidden Guide</div>
-      </div>
-    </div>
-  </footer>
-
   <script>
-    // ── NAV sticky ──
-    const nav = document.getElementById('nav');
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          nav.classList.toggle('stuck', window.scrollY > 50);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }, { passive: true });
+    let submitted = false;
 
-    // ── Scroll reveal (IO) ──
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('up'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-    // ── Bento mouse glow: 데스크탑 only ──
-    if (window.matchMedia('(hover: hover)').matches) {
-      document.querySelectorAll('.bc').forEach(card => {
-        card.addEventListener('mousemove', e => {
-          const r = card.getBoundingClientRect();
-          card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-          card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
-        }, { passive: true });
-      });
-    }
-
-// ── Email signup handler (Google Forms 연동 버전) ──
-    let submitted = false; // 제출 상태 확인 변수
-
+    // 전송 성공 시 화면 변경 함수
     function handleSignupSuccess() {
-      if (submitted) {
-        // 기존 폼 숨기고 성공 메시지 표시
-        const form = document.getElementById('signup-form');
-        const success = document.getElementById('signup-success');
-        
-        if (form && success) {
-          form.style.display = 'none';
-          success.style.display = 'block';
-          success.classList.add('up');
-        }
+      if(submitted) {
+        document.getElementById('signup-form').style.display = 'none';
+        const successMsg = document.getElementById('signup-success');
+        successMsg.style.display = 'block';
+        successMsg.classList.add('up');
       }
     }
 
-    // 기존 handleSignup 함수는 이제 HTML의 onsubmit="submitted=true;"가 대신하므로 삭제해도 무방하지만, 
-    // 유효성 검사(이메일 형식 체크)를 위해 아래와 같이 유지하는 것을 추천합니다.
+    // 전송 전 유효성 검사 함수
     function handleSignup(e) {
       const input = document.getElementById('email-input');
       const val = input.value.trim();
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       
       if (!re.test(val)) {
-        e.preventDefault(); // 형식이 틀리면 전송 중단
-        input.style.color = '#B85A45';
-        input.style.borderColor = 'rgba(184,90,69,0.4)';
-        setTimeout(() => { 
-          input.style.color = ''; 
-          input.style.borderColor = ''; 
-        }, 1400);
-        submitted = false;
+        alert("올바른 이메일 형식을 입력해주세요.");
         return false;
       }
-      // 형식이 맞으면 true를 반환하여 폼이 전송되도록 함
-      submitted = true;
-      return true;
+      
+      submitted = true; // 전송 시작을 알림
+      return true; // 구글 폼으로 전송 허용
     }
 
-    // ── Reveal 애니메이션 설정 (기존 코드 유지) ──
+    // ── Reveal 애니메이션 (기존 유지) ──
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('up'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+    }, { threshold: 0.08 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // ── Bento mouse glow (기존 코드 유지) ──
-    if (window.matchMedia('(hover: hover)').matches) {
-      document.querySelectorAll('.bc').forEach(card => {
-        card.addEventListener('mousemove', e => {
-          const r = card.getBoundingClientRect();
-          card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-          card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
-        }, { passive: true });
+    // ── Bento Glow (기존 유지) ──
+    document.querySelectorAll('.bc').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
       });
-    }
+    });
   </script>
-</body>
-</html>
+ 
